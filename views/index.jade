@@ -1,0 +1,26 @@
+extend layout
+block content
+  p
+    | Vivamus hendrerit arcu sed erat molestie
+    | vehicula. Sed auctor neque eu tellus
+    | rhoncus ut eleifend nibh porttitor. Ut in.
+  p
+    | Donec congue lacinia dui, a porttitor
+    | lectus condimentum laoreet. Nunc eu
+    | ullamcorper orci. Quisque eget odio ac
+    | lectus vestibulum faucibus eget in metus.
+    | In pellentesque faucibus vestibulum. Nulla
+    | at nulla justo, eget luctus tortor.
+block sidebar
+  .widget
+    h1 Configuration
+    div.input
+      span.label Cycles
+      input(type="text", name="cycles", id="cycles", value="3")
+    div.buttons
+      input(type="button", name="process", id="process", value="Process")
+    
+    h1 Result
+    div.result
+      span.label Log
+      textarea.result
