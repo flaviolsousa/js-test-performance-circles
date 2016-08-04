@@ -15,6 +15,7 @@
 		];
 	var iCurrentTest = 0;
 	var iCycle = 0;
+	var delayStart = 0;
 	var startCurrentTest = null;
 	var subParts = null;
 	var components = [];
@@ -44,6 +45,7 @@
 		scrollToElement('#testWrapper' + tests[iCurrentTest].getName());
 		startCurrentTest = moment();
 		iCycle = 0;
+		delayStart = 1500;
 		subParts = [ tests[iCurrentTest].getPart() ];
 		requestStepTest();
 	}
@@ -53,7 +55,12 @@
 		if (options.slowMotion) {
 			setTimeout(stepTest, 1000);
 		} else {
-			requestAnimationFrame(stepTest);
+			if (delayStart > 0) {
+				setTimeout(stepTest, delayStart);
+				delayStart = 0;
+			} else {
+				requestAnimationFrame(stepTest);
+			}
 		}
 	}
 	

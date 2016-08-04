@@ -15678,6 +15678,7 @@ module.exports.T_BACKGROUND_COLOR = "#ededde";
 		];
 	var iCurrentTest = 0;
 	var iCycle = 0;
+	var delayStart = 0;
 	var startCurrentTest = null;
 	var subParts = null;
 	var components = [];
@@ -15707,6 +15708,7 @@ module.exports.T_BACKGROUND_COLOR = "#ededde";
 		scrollToElement('#testWrapper' + tests[iCurrentTest].getName());
 		startCurrentTest = moment();
 		iCycle = 0;
+		delayStart = 1500;
 		subParts = [ tests[iCurrentTest].getPart() ];
 		requestStepTest();
 	}
@@ -15716,7 +15718,12 @@ module.exports.T_BACKGROUND_COLOR = "#ededde";
 		if (options.slowMotion) {
 			setTimeout(stepTest, 1000);
 		} else {
-			requestAnimationFrame(stepTest);
+			if (delayStart > 0) {
+				setTimeout(stepTest, delayStart);
+				delayStart = 0;
+			} else {
+				requestAnimationFrame(stepTest);
+			}
 		}
 	}
 	
