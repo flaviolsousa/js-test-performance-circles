@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-js": "browserify scripts/app.js > public/client.js",
+    "watch-js": "watchify scripts/app.js -o public/client.js"
   },
   "repository": {
     "type": "git",
@@ -27,8 +29,17 @@
   "dependencies": {
     "express": "^4.14.0",
     "jade": "^1.11.0",
+    "jquery": "latest",
+    "moment": "^2.14.1",
     "morgan": "^1.7.0",
     "nib": "^1.1.0",
-    "stylus": "^0.54.5"
+    "randomcolor": "^0.4.4",
+    "scroll-to-element": "^2.0.0",
+    "stylus": "^0.54.5",
+    "trigger-maker": "^0.2.0"
+  },
+  "devDependencies": {
+    "browserify": "latest",
+    "watchify": "latest"
   }
 }
