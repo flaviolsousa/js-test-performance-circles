@@ -1,21 +1,36 @@
 (function(){
 	"use strict";
 	
+	/*
+	https://pixijs.github.io/examples/
+	https://github.com/pixijs/pixi.js
+	*/
+
+	
+	const MIN_RADIO_VALUE_TO_STROKE_PARTS = 2;
+	const MAX_RADIO_VALUE_TO_STROKE_PARTS = 10;
+	
 	var constants = require('./constants.js');
 	var part = require('./part.js');
 	var triggerMaker = require('trigger-maker');
 
-
-	const MIN_RADIO_VALUE_TO_STROKE_PARTS = 2;
-	const MAX_RADIO_VALUE_TO_STROKE_PARTS = 10;
-
-
+	var pixi = require('pixi.js');
+	
+	//var renderer = pixi.WebGLRenderer(constants.T_W, constants.T_W);
+	var renderer = new pixi.CanvasRenderer(constants.T_W, constants.T_W);
+	renderer.backgroundColor = getIntColor(constants.T_BACKGROUND_COLOR);
+	
+	var stage = new PIXI.Container();
+	var graphics = new PIXI.Graphics();
+	
+	stage.addChild(graphics);
+	
 	var model = {
 		part: new part()
 	}
 
 	module.exports.getName = function() {
-		return "SimpleCanvas";
+		return "PIXI_CanvasRenderer";
 	};
 
 	model.jContainer = $('<div></div>')
@@ -23,7 +38,7 @@
 				id: "testContainer" + module.exports.getName(),
 				class: "testContainer"
 			});
-
+	model.jContainer.append(renderer.view);
 
 	module.exports.getComponent = function() {
 		return model.jContainer;
@@ -32,18 +47,6 @@
 	module.exports.getPart = function(){
 		return model.part;
 	};
-
-	model.jCanvas = $('<canvas></canvas>')
-		.attr({
-			width: constants.T_W,
-			height: constants.T_W
-		});
-	model.canvas = model.jCanvas[0];
-	model.jContainer.append(model.jCanvas);
-
-	var context = model.canvas.getContext("2d");
-	context.fillStyle = constants.T_BACKGROUND_COLOR;
-	context.fillRect(0, 0, constants.T_W, constants.T_W); 
 
 	draw(model.part);
 	model.part.trigger.on(model.part.EVENT_SPLIT, function(event) {
@@ -56,20 +59,19 @@
 	});
 
 	function draw (part, options) {
-		options = options || {};
+				options = options || {};
 		options.color = options.color || part.color;
 		
-		var context = model.canvas.getContext("2d");
-		context.beginPath();
-		context.fillStyle = options.color;
-		context.arc(part.x, part.y, part.r, 0, 2 * Math.PI, false);
-		context.fill();
 		
-		if (options.drawLineStroke) {
-			context.lineWidth = 1;
-			context.strokeStyle = options.color;
-			context.stroke();
-		}
+		graphics.lineStyle(0);
+		graphics.beginFill(getIntColor(options.color), 1);
+		graphics.drawCircle(part.x, part.y, part.r + (options.drawLineStroke ? 1 : 0));
+		
+		renderer.render(stage);
+	}
+	
+	function getIntColor(htmlColor) {
+		return eval(htmlColor.replace("#", "0x"))
 	}
 
 })();

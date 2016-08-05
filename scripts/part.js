@@ -10,9 +10,9 @@ var Part = function Part( options ) {
 	this.x = options.x || constants.T_W / 2;
 	this.y = options.y || constants.T_W / 2;
 	this.r = options.r || constants.T_W / 2;
-	this.depth = options.depth || 0;
-	this.color = options.color || randomColor();
 	this.parent = options.parent;
+	this.depth = options.depth || (this.parent ? this.parent.depth + 1 : 0);
+	this.color = options.color || randomColor();
 	this.proccessed = false;
 	
 	if (this.parent) {

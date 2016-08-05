@@ -11,26 +11,45 @@
 	var options = enhanceProcessOptions();
 	var tests = [ 
 			testCanvas
-			,
-			testTreeDivs
-			,
-			testPIXI
+			//,
+			//testTreeDivs
+			//,
+			//testPIXI
 		];
-	var selectedTests = null;
 	var iCurrentTest = 0;
 	var iCycle = 0;
 	var delayStart = 0;
 	var startCurrentTest = null;
-	var pendParts = null;
+	var subParts = null;
 	var components = [];
 
-	function prepareProcessTest() {
-		scrollToElement('#testWrapper' + options.selectedTests[iCurrentTest].getName());
-		startCurrentTest = null;
+
+	function splitParts( parts ) {
+		iCycle++;
+		subParts = [];
+		parts.forEach(function (item, index) {
+			item.split();
+			subParts = subParts.concat(item.subParts);
+		});
 		
+		if (iCycle < options.totalCycles) {
+			requestStepTest();
+		} else {
+			tests[iCurrentTest].testWrapper.children('h2').html(`${ tests[iCurrentTest].getName() } (${ moment().diff(startCurrentTest) } ms)`)
+			
+			if (++iCurrentTest < components.length) {
+				prepareProcessTest();
+			}
+			
+		}
+	}
+	
+	function prepareProcessTest() {
+		scrollToElement('#testWrapper' + tests[iCurrentTest].getName());
+		startCurrentTest = moment();
 		iCycle = 0;
 		delayStart = 1500;
-		pendParts = [ options.selectedTests[iCurrentTest].getPart() ];
+		subParts = [ tests[iCurrentTest].getPart() ];
 		requestStepTest();
 	}
 	
@@ -49,25 +68,7 @@
 	}
 	
 	function stepTest() {
-		if (startCurrentTest == null) {
-			startCurrentTest = moment();
-		}
-		
-		var item = pendParts.shift();
-		item.split();
-		if (item.depth + 1 < options.totalCycles) {
-			pendParts = pendParts.concat(item.subParts);
-		}
-		
-		if (pendParts.length > 0) {
-			requestStepTest();
-		} else {
-			options.selectedTests[iCurrentTest].testWrapper.children('h2').html(`${ options.selectedTests[iCurrentTest].getName() } (${ moment().diff(startCurrentTest) } ms)`)
-			
-			if (++iCurrentTest < options.selectedTests.length) {
-				prepareProcessTest();
-			}
-		}
+		splitParts( subParts );
 	}
 
 	tests.forEach(function (item, index) {
@@ -87,7 +88,6 @@
 		options = options || {};
 		options.slowMotion = options.slowMotion || false;
 		options.totalCycles = options.totalCycles || 3;
-		options.selectedTests = options.selectedTests || tests;
 		
 		return options;
 	}
@@ -100,8 +100,8 @@
 		
 	};
 
+
 	module.exports.components = components;
-	module.exports.tests = tests;
 
 })();
 

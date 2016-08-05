@@ -118,6 +118,10 @@ header {
   border-bottom: 1px solid #1b3a49;
   text-shadow: 0px -1px 0px #1b3a49;
 }
+.testContainer {
+  width: 600px;
+  height: 600px;
+}
 .container {
   width: 800px;
   margin: 50px auto;
@@ -133,6 +137,7 @@ header {
 .sidebar {
   float: left;
   width: 200px;
+  margin-bottom: 10px;
 }
 .sidebar .widget {
 /*
@@ -177,15 +182,13 @@ header {
 .sidebar div.buttons input[type="button"] {
   margin-left: 10px;
 }
-.sidebar div.result span.label {
+.sidebar div.checkTests span.label {
   font-size: 13px;
   padding: 0px 10px;
 }
-.sidebar div.result textarea.result {
+.sidebar div.checkTests .checkTest {
   font-size: 13px;
-  width: 164px;
   margin-left: 10px;
-  margin-bottom: 10px;
 }
 p {
   line-height: 1.8;
