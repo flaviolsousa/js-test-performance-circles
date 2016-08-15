@@ -9,7 +9,7 @@
 		part = require('./part.js');
 
 	var options = enhanceProcessOptions();
-	var tests = [ 
+	var tests = [
 			testCanvas
 			,
 			testTreeDivs
@@ -34,7 +34,6 @@
 		requestStepTest();
 	}
 	
-
 	function requestStepTest() {
 		if (options.slowMotion) {
 			setTimeout(stepTest, 1000);
