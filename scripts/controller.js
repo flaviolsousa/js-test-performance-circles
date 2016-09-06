@@ -6,6 +6,7 @@
 		testCanvas = require('./testCanvas.js'),
 		testTreeDivs = require('./testTreeDivs.js'),
 		testPIXI = require('./testPIXI_CanvasRenderer.js'),
+		testSVG = require('./testSVG.js'),
 		part = require('./part.js');
 
 	var options = enhanceProcessOptions();
@@ -15,6 +16,8 @@
 			testTreeDivs
 			,
 			testPIXI
+			,
+			testSVG
 		];
 	var selectedTests = null;
 	var iCurrentTest = 0;

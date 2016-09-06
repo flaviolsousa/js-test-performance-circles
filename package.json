@@ -36,6 +36,7 @@
     "pixi.js": "goodboydigital/pixi.js",
     "randomcolor": "^0.4.4",
     "scroll-to-element": "^2.0.0",
+    "snapsvg": "^0.4.0",
     "stylus": "^0.54.5",
     "trigger-maker": "^0.2.0"
   },

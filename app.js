@@ -23,8 +23,9 @@
 	app.use(morgan('combined'));
 
 	app.use(stylus.middleware(
-	  { src: __dirname + '/public'
-	  , compile: compile
+	  { 
+	    src: __dirname + '/public', 
+		compile: compile
 	  }
 	));
 	app.use(express.static(__dirname + '/public'));
@@ -32,7 +33,7 @@
 
 	app.get('/', function (req, res) {
 	  res.render('index',
-	  { title : 'Home' }
+	    { title : 'Home' }
 	  )
 	});
 	app.listen(3000);
